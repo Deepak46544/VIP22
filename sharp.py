@@ -135,7 +135,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def bgmi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
     if user_id not in users or datetime.datetime.now() > datetime.datetime.strptime(users[user_id], '%Y-%m-%d %H:%M:%S'):
-        await update.message.reply_text("❌ You don't have an active subscription.")
+        await update.message.reply_text("❌ You don't have an active subscription. @raj14754")
         return
 
     if len(context.args) != 3:
@@ -147,7 +147,7 @@ async def bgmi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         port = int(context.args[1])
         duration = int(context.args[2])
     except ValueError:
-        await update.message.reply_text("⚠️ Port and duration must be integers.")
+        await update.message.reply_text("⚠️ Port and duration must be integers. @raj14754")
         return
 
     proxy = get_next_proxy()
@@ -170,14 +170,14 @@ async def bgmi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             "id": unique_id  # Store the attack ID
         }
         
-        await update.message.reply_text(f"🚀 Flooding started on {target_ip}:{port} for {duration} seconds.\n🔑 Attack ID: {unique_id} has been generated for your session.@raj14754")
+        await update.message.reply_text(f"🚀 𝘼𝙩𝙩𝙖𝙘𝙠 𝙎𝙚𝙣𝙩 𝙎𝙪𝙘𝙘𝙚𝙨𝙨𝙛𝙪𝙡𝙡𝙮 🚀  {target_ip}:{port} for {duration} 𝙎𝙚𝙘𝙤𝙣𝙙𝙨.\n🔑 𝘼𝙩𝙩𝙖𝙘𝙠𝙚𝙧 ID: {unique_id} has been generated for your session.@raj14754")
     except Exception as e:
         await update.message.reply_text(f"❌ Error starting attack: {str(e)}")
 
 async def display_player_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
     if user_id not in player_stats:
-        await update.message.reply_text("❌ You don't have player statistics recorded.")
+        await update.message.reply_text("❌ You don't have player statistics recorded. @raj14754")
         return
 
     stats = player_stats[user_id]
