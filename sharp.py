@@ -197,7 +197,7 @@ async def stop_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 async def pause_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
-    if user_id not in user_processes or user_processes[user_id]["stop"]:
+    if user_id not in user_processes or user_processes[user_id]["paused"]:
         await update.message.reply_text("⏸️ No ongoing attack to Stop.@raj14754")
         return
     process = user_processes[user_id]["process"]
@@ -210,7 +210,7 @@ async def pause_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 async def resume_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
-    if user_id not in user_processes or not user_processes[user_id]["stop"]:
+    if user_id not in user_processes or not user_processes[user_id]["paused"]:
         await update.message.reply_text("▶️ No paused attack to restart.@raj14754")
         return
     process = user_processes[user_id]["process"]
