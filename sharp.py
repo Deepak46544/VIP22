@@ -170,14 +170,14 @@ async def bgmi(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             "id": unique_id  # Store the attack ID
         }
         
-        await update.message.reply_text(f"🚀 Flooding started on {target_ip}:{port} for {duration} seconds.\n🔑 Attack ID: {unique_id} has been generated for your session.@raj14754")
+        await update.message.reply_text(f"🚀 𝘼𝙩𝙩𝙖𝙘𝙠 𝙎𝙚𝙣𝙩 𝙎𝙪𝙘𝙘𝙚𝙨𝙨𝙛𝙪𝙡𝙡𝙮 🚀  {target_ip}:{port} for {duration} 𝙎𝙚𝙘𝙤𝙣𝙙𝙨.\n🔑 𝘼𝙩𝙩𝙖𝙘𝙠𝙚𝙧 ID: {unique_id} has been generated for your session.@raj14754")
     except Exception as e:
         await update.message.reply_text(f"❌ Error starting attack: {str(e)}")
 
 async def display_player_stats(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
     if user_id not in player_stats:
-        await update.message.reply_text("❌ You don't have player statistics recorded.")
+        await update.message.reply_text("❌ You don't have player statistics recorded. @raj14754")
         return
 
     stats = player_stats[user_id]
@@ -186,7 +186,7 @@ async def display_player_stats(update: Update, context: ContextTypes.DEFAULT_TYP
 async def stop_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
     if user_id not in user_processes:
-        await update.message.reply_text("🛑 You don't have an active attack.", reply_markup=main_menu_keyboard())
+        await update.message.reply_text("🛑 You don't have an active attack. @raj14754", reply_markup=main_menu_keyboard())
         return
     try:
         user_processes[user_id]["process"].terminate()
@@ -204,7 +204,7 @@ async def pause_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     try:
         process.send_signal(signal.SIGSTOP)
         user_processes[user_id]["paused"] = True
-        await update.message.reply_text("✅ Attack paused.")
+        await update.message.reply_text("✅ Attack paused. @raj14754")
     except Exception as e:
         await update.message.reply_text(f"❌ Error pausing attack: {str(e)}")
 
