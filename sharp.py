@@ -102,7 +102,7 @@ def generate_unique_id(length=10):
 # Function to generate main menu keyboard
 def main_menu_keyboard():
     return ReplyKeyboardMarkup([ 
-        [KeyboardButton("/resume ▶️"), KeyboardButton("/pause ⏸️")],
+        [KeyboardButton("/Restart ▶️"), KeyboardButton("/Stop ⏸️")],
         [KeyboardButton("/view_attacks 📊")],
         [KeyboardButton("/check_bgmi_traffic 📈 ")], 
         [KeyboardButton("/help ℹ️")],
@@ -197,29 +197,29 @@ async def stop_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 
 async def pause_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
-    if user_id not in user_processes or user_processes[user_id]["paused"]:
-        await update.message.reply_text("⏸️ No ongoing attack to pause.@raj14754")
+    if user_id not in user_processes or user_processes[user_id]["stop"]:
+        await update.message.reply_text("⏸️ No ongoing attack to Stop.@raj14754")
         return
     process = user_processes[user_id]["process"]
     try:
         process.send_signal(signal.SIGSTOP)
         user_processes[user_id]["paused"] = True
-        await update.message.reply_text("✅ Attack paused.")
+        await update.message.reply_text("✅ Attack Stop.")
     except Exception as e:
-        await update.message.reply_text(f"❌ Error pausing attack: {str(e)}")
+        await update.message.reply_text(f"❌ Error stop attack: {str(e)}")
 
 async def resume_attack(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
-    if user_id not in user_processes or not user_processes[user_id]["paused"]:
-        await update.message.reply_text("▶️ No paused attack to resume.@raj14754")
+    if user_id not in user_processes or not user_processes[user_id]["stop"]:
+        await update.message.reply_text("▶️ No paused attack to restart.@raj14754")
         return
     process = user_processes[user_id]["process"]
     try:
         process.send_signal(signal.SIGCONT)
         user_processes[user_id]["paused"] = False
-        await update.message.reply_text("✅ Attack resumed.@raj14754")
+        await update.message.reply_text("✅ Attack restart.@raj14754")
     except Exception as e:
-        await update.message.reply_text(f"❌ Error resuming attack: {str(e)}")
+        await update.message.reply_text(f"❌ Error restart attack: {str(e)}")
 
 async def view_attacks(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = str(update.message.from_user.id)
@@ -243,7 +243,7 @@ async def attack_remove(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
         try:
             process.terminate()
             del user_processes[user_id]
-            await update.message.reply_text(f"✅ Attack with ID {attack_id} has been stopped and removed.")
+            await update.message.reply_text(f"✅ Attack with ID {attack_id} has been stopped and removed. @raj14754")
             attack_found = True
         except Exception as e:
             await update.message.reply_text(f"❌ Error removing attack: {str(e)}")
@@ -329,8 +329,8 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
                                       "/start - Start the bot\n"
                                       "/bgmi - Start a new attack\n"
                                       "/stop_attack - Stop an ongoing attack\n"
-                                      "/pause - Pause an ongoing attack\n"
-                                      "/resume - Resume a paused attack\n"
+                                      "/stop - Pause an ongoing attack\n"
+                                      "/restat - Resume a paused attack\n"
                                       "/view_attacks - View ongoing attacks\n"
                                       "/attack_remove - Remove an attack using its ID\n"
                                       "/check_bgmi_traffic - Check current BGMI traffic\n"
@@ -346,8 +346,8 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("bgmi", bgmi))
     app.add_handler(CommandHandler("stop_attack", stop_attack))
-    app.add_handler(CommandHandler("pause", pause_attack))
-    app.add_handler(CommandHandler("resume", resume_attack))
+    app.add_handler(CommandHandler("stop", pause_attack))
+    app.add_handler(CommandHandler("restart", resume_attack))
     app.add_handler(CommandHandler("view_attacks", view_attacks))
     app.add_handler(CommandHandler("attack_remove", attack_remove))
     app.add_handler(CommandHandler("check_bgmi_traffic", check_bgmi_traffic))
